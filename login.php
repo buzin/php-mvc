@@ -9,5 +9,5 @@
 require_once 'controllers/UserController.php';
 require_once 'config.php';
 
-$tasks = new UserController($config);
-$tasks->login();
+$user = new UserController($config);
+$user->login();
