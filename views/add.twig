@@ -1,0 +1,42 @@
+{% import "macros.twig" as macros %}
+{% extends "layout.twig" %}
+{% block content %}
+    <h1>{{ title }}</h1>
+    {% if message %}
+        {{ macros.alert('Information', message) }}
+    {% endif %}
+    <form method="post" action="" enctype="multipart/form-data">
+        <div id="input">
+            <div class="form-group">
+                <label for="user-id">User</label>
+                <select class="form-control" id="user-id" name="user-id">
+                    {% for user in users %}
+                    <option value="{{ user.id }}" data-email="{{ user.email }}"{% if user.id == user_id %} selected{% endif %}>{{ user.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="text">Text</label>
+                <textarea class="form-control" id="text" name="text" rows="3">{{ text }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" class="form-control-file" id="image" name="image"/>
+                <span id="output"></span>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="status" name="status" value="1" {% if status %} checked{% endif %}/>
+                <label class="form-check-label" for="status">Completed</label>
+            </div>
+        </div>
+        <div id="preview" class="d-none">
+            <div class="form-group" id="preview-name"></div>
+            <div class="form-group" id="preview-email"></div>
+            <div class="form-group" id="preview-text"></div>
+            <div class="form-group" id="preview-image"></div>
+            <div class="form-group" id="preview-status"></div>
+        </div>
+        <button type="submit" class="btn btn-primary" name="continue">Continue</button>
+        <a id="preview-btn" class="btn btn-outline-primary">Preview</a>
+    </form>
+{% endblock %}

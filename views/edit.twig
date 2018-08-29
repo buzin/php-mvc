@@ -1,0 +1,39 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <h1>{{ title }}</h1>
+    {% if info.id %}
+    <form method="post" action="">
+        <div class="form-group">
+            {{ info.name }}
+        </div>
+        <div class="form-group">
+            {{ info.email }}
+        </div>
+        {% if info.filename %}
+        <div class="form-group">
+            <img src="{{ uploads }}/{{ info.filename }}" width="{{ info.width }}" height="{{ info.height }}" alt=""/>
+        </div>
+        {% endif %}
+        {% if is_logged %}
+        <div class="form-group">
+            <textarea class="form-control" id="text" name="text" rows="3">{{ info.text }}</textarea>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="status" name="status" value="1"
+                {% if info.status %} checked=""{% endif %}/>
+            <label class="form-check-label" for="status">Completed</label>
+        </div>
+        <button type="submit" class="btn btn-primary" name="update">Update</button>
+        {% else %}
+        <div class="form-group">
+            {{ info.text }}
+        </div>
+        <div class="form-group">
+            {%  if info.status %}Completed{% else %}In progress{% endif %}
+        </div>
+        {% endif %}
+    </form>
+    {% else %}
+        Task does not exist.
+    {% endif %}
+{% endblock %}

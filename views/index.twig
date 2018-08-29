@@ -1,0 +1,49 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <h1>{{ title }}</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col"><a href="?sort=name">Name</a></th>
+            <th scope="col"><a href="?sort=email">Email</a></th>
+            <th scope="col">Text</th>
+            <th scope="col">Picture</th>
+            <th scope="col"><a href="?sort=status">Status</a></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+        <tr>
+            <th scope="row">{{ task.id }}</th>
+            <td><a href="edit.php?id={{ task.id }}">{{ task.name }}</a></td>
+            <td><a href="edit.php?id={{ task.id }}">{{ task.email }}</a></td>
+            <td>{{ task.text }}</td>
+            <td></td>
+            <td><a href="edit.php?id={{ task.id }}">{%  if task.status %}Completed{% else %}In progress{% endif %}</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item{% if page <= 1 %} disabled{% endif %}">
+                <a class="page-link" href="?page={{ page - 1 }}{% if sort %}&sort={{ sort }}{% endif %}">Previous</a>
+            </li>
+
+            {% set j = 1 %}
+            {% for i in pager_start..pager_start + pager_size - 1 if j <= pager_size %}
+                <li class="page-item{% if i == page %} disabled{% endif %}">
+                    <a class="page-link" href="?page={{ i }}{% if sort %}&sort={{ sort }}{% endif %}">
+                        {{ i }}
+                    </a></li>
+                {% set j = j + 1 %}
+            {% endfor %}
+
+            <li class="page-item{% if page >= total %} disabled{% endif %}">
+                <a class="page-link" href="?page={{ page + 1 }}{% if sort %}&sort={{ sort }}{% endif %}">Next</a>
+            </li>
+        </ul>
+    </nav>
+    <a href="add.php" class="btn btn-outline-primary">Add Task</a>
+{% endblock %}
